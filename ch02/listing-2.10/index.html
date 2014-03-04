@@ -1,0 +1,33 @@
+<html>
+<body onload="loadPhotos();">
+<div id="photos"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+function loadPhotos() {
+  var api_key = '<YOUR API KEY HERE>';
+  var method = 'GET';
+  var url = 'http://api.flickr.com/services/rest/?' +
+      'method=flickr.people.getPublicPhotos&' +
+      'user_id=32951986%40N05&' +
+      'extras=url_q&format=json&nojsoncallback=1&' +
+      'api_key=' + api_key;
+
+  $.ajax(url, {
+    type: method,
+    dataType: 'json',
+    success: function(response, textStatus, jqXHR) {
+      if (response.stat == 'ok') {
+        for (var i = 0; i < response.photos.photo.length; i++) {
+          var img = document.createElement('img');
+          img.src = response.photos.photo[i].url_q;
+          document.getElementById('photos').appendChild(img);
+        }
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      alert('error');
+    }});
+}
+</script>
+</body>
+</html>
