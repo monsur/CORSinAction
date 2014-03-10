@@ -45,7 +45,7 @@
         }
       }
       for (var name in headers) {
-        resp[name] = headers[name];
+        resp.set(name, headers[name]);
       }
       next();
     };
