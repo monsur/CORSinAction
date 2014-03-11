@@ -6,11 +6,21 @@
 
   var middleware = {
     'start': function(req, resp) {
-      // TODO
+      var hasOriginHeader = req.headers['origin'];
+      if (hasOriginHeader) {
+        isCors = true;
+        var isHttpOptions = req.method === 'OPTIONS';
+        var hasRequestMethod = req.headers['access-control-request-method'];
+        if (isHttpOptions && hasRequestMethod) {
+          isPreflight = true;
+        }
+      }
       return true;
     },
 
     'allowOrigins': function(req, resp) {
+      console.log('isCors = ' + isCors);
+      console.log('isPreflight = ' + isPreflight);
       // TODO
       return true;
     },

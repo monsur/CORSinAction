@@ -45,7 +45,6 @@
   module.exports = function(o) {
     options = o || {};
     return function(req, resp, next) {
-      start(res, resp);
       for (var name in middleware) {
         var status = middleware[name].call(this, req, resp);
         if (!status) {
