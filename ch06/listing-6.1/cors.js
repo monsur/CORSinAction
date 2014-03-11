@@ -4,31 +4,31 @@
   var isCors = false;
   var isPreflight = false;
 
-  var start = function(res, resp) {
+  var start = function(req, resp) {
   };
 
   var middleware = {
-    'allowOrigins': function(res, resp) {
+    'allowOrigins': function(req, resp) {
       return true;
     },
 
-    'allowCredentials': function(res, resp) {
+    'allowCredentials': function(req, resp) {
       return true;
     },
 
-    'allowMethods': function(res, resp) {
+    'allowMethods': function(req, resp) {
       return true;
     },
 
-    'allowHeaders': function(res, resp) {
+    'allowHeaders': function(req, resp) {
       return true;
     },
 
-    'maxAge': function(res, resp) {
+    'maxAge': function(req, resp) {
       return true;
     },
 
-    'exposeHeaders': function(res, resp) {
+    'exposeHeaders': function(req, resp) {
       return true;
     },
 
@@ -36,10 +36,10 @@
 
   module.exports = function(o) {
     options = o || {};
-    return function(res, resp, next) {
+    return function(req, resp, next) {
       start(res, resp);
       for (var name in middleware) {
-        var status = middleware[name].call(this, res, resp);
+        var status = middleware[name].call(this, req, resp);
         if (!status) {
           break;
         }
