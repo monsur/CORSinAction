@@ -42,6 +42,7 @@
   module.exports = function(o) {
     options = o || {};
     return function(req, resp, next) {
+      headers = {};
       for (var i = 0; i < corsFunctions.length; i++) {
         var func = corsFunctions[i];
         var status = func(req, resp);
