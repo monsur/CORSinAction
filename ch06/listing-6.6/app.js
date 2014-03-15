@@ -7,6 +7,17 @@ var POSTS = {
   '3': {'post': 'This is the third blog post.'}
 };
 
+var createWhitelistValidator = function(whitelist) {
+  return function(val) {
+    for (var i = 0; i < whitelist.length; i++) {
+      if (val == whitelist[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
 var corsOptions = {};
 
 var SERVER_PORT = 9999;
