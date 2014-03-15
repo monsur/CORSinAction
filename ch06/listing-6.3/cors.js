@@ -43,7 +43,7 @@
         if (!status) {
           break;
         }
-      };
+      }
       for (var name in headers) {
         resp.set(name, headers[name]);
       }
