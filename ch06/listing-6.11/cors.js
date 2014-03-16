@@ -11,7 +11,7 @@
     return true;
   };
 
-  var allowOrigins = function(req, resp) {
+  var allowOrigin = function(req, resp) {
     if (options.originValidator) {
       var origin = req.headers['origin'];
       if (options.originValidator(origin)) {
@@ -44,7 +44,7 @@
     return true;
   };
 
-  var corsFunctions = [start, allowOrigins, allowCredentials,
+  var corsFunctions = [start, allowOrigin, allowCredentials,
       allowMethods, allowHeaders, maxAge, exposeHeaders];
 
   module.exports = function(o) {

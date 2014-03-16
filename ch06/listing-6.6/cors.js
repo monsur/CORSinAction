@@ -11,7 +11,7 @@
     return true;
   };
 
-  var allowOrigins = function(req, resp) {
+  var allowOrigin = function(req, resp) {
     headers['Access-Control-Allow-Origin'] = '*';
     return true;
   };
@@ -36,7 +36,7 @@
     return true;
   };
 
-  var corsFunctions = [start, allowOrigins, allowCredentials,
+  var corsFunctions = [start, allowOrigin, allowCredentials,
       allowMethods, allowHeaders, maxAge, exposeHeaders];
 
   module.exports = function(o) {
