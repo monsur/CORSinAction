@@ -40,6 +40,7 @@ var handleCors = function(options) {
       if (options.originValidator(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
       }
+      res.set('Vary', 'Origin');
     } else {
       res.set('Access-Control-Allow-Origin', '*');
     }
