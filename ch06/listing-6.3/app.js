@@ -6,6 +6,17 @@ var POSTS = {
   '3': {'post': 'This is the third blog post.'}
 };
 
+var createWhitelistValidator = function(whitelist) {
+  return function(val) {
+    for (var i = 0; i < whitelist.length; i++) {
+      if (val == whitelist[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
 var isPreflight = function(req) {
   var isHttpOptions = req.method === 'OPTIONS';
   var hasOriginHeader = req.headers['origin'];
