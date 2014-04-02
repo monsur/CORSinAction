@@ -6,6 +6,13 @@ var POSTS = {
   '3': {'post': 'This is the third blog post.'}
 };
 
+var isPreflight = function(req) {
+  var isHttpOptions = req.method === 'OPTIONS';
+  var hasOriginHeader = req.headers['origin'];
+  var hasRequestMethod = req.headers['access-control-request-method'];
+  return isHttpOptions && hasOriginHeader && hasRequestMethod;
+};
+
 var createWhitelistValidator = function(whitelist) {
   return function(val) {
     for (var i = 0; i < whitelist.length; i++) {
@@ -17,16 +24,26 @@ var createWhitelistValidator = function(whitelist) {
   }
 };
 
-var isPreflight = function(req) {
-  var isHttpOptions = req.method === 'OPTIONS';
-  var hasOriginHeader = req.headers['origin'];
-  var hasRequestMethod = req.headers['access-control-request-method'];
-  return isHttpOptions && hasOriginHeader && hasRequestMethod;
+var originWhitelist = [
+  'http://localhost:1111'
+];
+
+var corsOptions = {
+  originValidator: createWhitelistValidator(originWhitelist)
 };
 
 var handleCors = function(options) {
   return function(req, res, next) {
-    res.set('Access-Control-Allow-Origin', '*');
+
+    if (options.originValidator) {
+      var origin = req.headers['origin'];
+      if (options.originValidator(origin)) {
+        res.set('Access-Control-Allow-Origin', origin);
+      }
+    } else {
+      res.set('Access-Control-Allow-Origin', '*');
+    }
+
     res.set('Access-Control-Allow-Credentials', 'true');
     res.set('Access-Control-Expose-Headers', 'X-Powered-By');
     if (isPreflight(req)) {
@@ -38,8 +55,6 @@ var handleCors = function(options) {
     next();
   }
 };
-
-var corsOptions = {};
 
 var SERVER_PORT = 9999;
 var serverapp = express();
