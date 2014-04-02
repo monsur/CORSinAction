@@ -6,6 +6,13 @@ var POSTS = {
   '3': {'post': 'This is the third blog post.'}
 };
 
+var isPreflight = function(req) {
+  var isHttpOptions = req.method === 'OPTIONS';
+  var hasOriginHeader = req.headers['origin'];
+  var hasRequestMethod = req.headers['access-control-request-method'];
+  return isHttpOptions && hasOriginHeader && hasRequestMethod;
+};
+
 var createWhitelistValidator = function(whitelist) {
   return function(val) {
     for (var i = 0; i < whitelist.length; i++) {
@@ -15,13 +22,6 @@ var createWhitelistValidator = function(whitelist) {
     }
     return false;
   }
-};
-
-var isPreflight = function(req) {
-  var isHttpOptions = req.method === 'OPTIONS';
-  var hasOriginHeader = req.headers['origin'];
-  var hasRequestMethod = req.headers['access-control-request-method'];
-  return isHttpOptions && hasOriginHeader && hasRequestMethod;
 };
 
 var corsOptions = {};
