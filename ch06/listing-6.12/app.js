@@ -60,7 +60,8 @@ var handleCors = function(options) {
             options.allowMethods.join(','));
       }
       if (options.allowHeaders) {
-        if (options.allowHeaders === '*') {
+        if (options.allowHeaders === '*' &&
+            req.headers['access-control-request-headers']) {
           res.set('Access-Control-Allow-Headers',
               req.headers['access-control-request-headers']);
         } else {
