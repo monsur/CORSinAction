@@ -13,24 +13,28 @@ var isPreflight = function(req) {
   return isHttpOptions && hasOriginHeader && hasRequestMethod;
 };
 
-var handleCors = function(req, res, next) {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
-  res.set('Access-Control-Allow-Credentials', 'true');
-  res.set('Access-Control-Expose-Headers', 'X-Powered-By');
-  if (isPreflight(req)) {
-    res.set('Access-Control-Allow-Methods', 'DELETE');
-    res.set('Access-Control-Allow-Headers',
-            'Timezone-Offset, Sample-Source');
-    res.set('Access-Control-Max-Age', '120');
+var handleCors = function(options) {
+  return function(req, res, next) {
+    res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
+    res.set('Access-Control-Allow-Credentials', 'true');
+    res.set('Access-Control-Expose-Headers', 'X-Powered-By');
+    if (isPreflight(req)) {
+      res.set('Access-Control-Allow-Methods', 'DELETE');
+      res.set('Access-Control-Allow-Headers',
+              'Timezone-Offset, Sample-Source');
+      res.set('Access-Control-Max-Age', '120');
+    }
+    next();
   }
-  next();
 };
+
+var corsOptions = {};
 
 var SERVER_PORT = 9999;
 var serverapp = express();
 serverapp.use(express.cookieParser());
 serverapp.use(express.static(__dirname));
-serverapp.use(handleCors);
+serverapp.use(handleCors(corsOptions));
 serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
 });
