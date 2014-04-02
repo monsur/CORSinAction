@@ -13,6 +13,8 @@ var isPreflight = function(req) {
   return isHttpOptions && hasOriginHeader && hasRequestMethod;
 };
 
+var corsOptions = {};
+
 var handleCors = function(options) {
   return function(req, res, next) {
     res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
@@ -27,8 +29,6 @@ var handleCors = function(options) {
     next();
   }
 };
-
-var corsOptions = {};
 
 var SERVER_PORT = 9999;
 var serverapp = express();
