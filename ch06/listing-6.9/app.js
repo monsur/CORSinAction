@@ -30,7 +30,8 @@ var originWhitelist = [
 ];
 
 var corsOptions = {
-  originValidator: createWhitelistValidator(originWhitelist)
+  originValidator: createWhitelistValidator(originWhitelist),
+  allowCredentials: true
 };
 
 var handleCors = function(options) {
@@ -46,7 +47,10 @@ var handleCors = function(options) {
       res.set('Access-Control-Allow-Origin', '*');
     }
 
-    res.set('Access-Control-Allow-Credentials', 'true');
+    if (options.allowCredentials) {
+      res.set('Access-Control-Allow-Credentials', 'true');
+    }
+
     res.set('Access-Control-Expose-Headers', 'X-Powered-By');
     if (isPreflight(req)) {
       res.set('Access-Control-Allow-Methods', 'DELETE');
