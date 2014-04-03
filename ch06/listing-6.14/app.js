@@ -34,7 +34,8 @@ var corsOptions = {
   allowCredentials: true,
   allowMethods: ['GET', 'DELETE'],
   allowHeaders: '*',
-  maxAge: 60
+  maxAge: 60,
+  exposeHeaders: ['X-Powered-By']
 };
 
 var handleCors = function(options) {
@@ -54,7 +55,6 @@ var handleCors = function(options) {
       res.set('Access-Control-Allow-Credentials', 'true');
     }
 
-    res.set('Access-Control-Expose-Headers', 'X-Powered-By');
     if (isPreflight(req)) {
       if (options.allowMethods) {
         res.set('Access-Control-Allow-Methods',
@@ -73,6 +73,8 @@ var handleCors = function(options) {
       if (options.maxAge) {
         res.set('Access-Control-Max-Age', options.maxAge);
       }
+    } else if (options.exposeHeaders) {
+      res.set('Access-Control-Expose-Headers', options.exposeHeaders.join(','));
     }
     next();
   }
