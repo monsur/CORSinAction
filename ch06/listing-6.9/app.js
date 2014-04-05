@@ -30,16 +30,16 @@ var originWhitelist = [
 ];
 
 var corsOptions = {
-  originValidator: createWhitelistValidator(originWhitelist),
+  allowOrigin: createWhitelistValidator(originWhitelist),
   allowCredentials: true
 };
 
 var handleCors = function(options) {
   return function(req, res, next) {
 
-    if (options.originValidator) {
+    if (options.allowOrigin) {
       var origin = req.headers['origin'];
-      if (options.originValidator(origin)) {
+      if (options.allowOrigin(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
       }
       res.set('Vary', 'Origin');
