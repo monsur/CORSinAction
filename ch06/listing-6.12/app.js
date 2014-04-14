@@ -33,7 +33,9 @@ var corsOptions = {
   allowOrigin: createWhitelistValidator(originWhitelist),
   allowCredentials: true,
   allowMethods: ['GET', 'DELETE'],
-  allowHeaders: '*',
+  allowHeaders: function(req) {
+    return req.headers['access-control-request-headers'];
+  },
   maxAge: 60
 };
 
@@ -60,15 +62,14 @@ var handleCors = function(options) {
         res.set('Access-Control-Allow-Methods',
             options.allowMethods.join(','));
       }
-      if (options.allowHeaders) {
-        if (options.allowHeaders === '*' &&
-            req.headers['access-control-request-headers']) {
-          res.set('Access-Control-Allow-Headers',
-              req.headers['access-control-request-headers']);
-        } else {
-          res.set('Access-Control-Allow-Headers',
-              options.allowHeaders.join(','));
+      if (typeof(options.allowHeaders) === 'function') {
+        var headers = options.allowHeaders(req);
+        if (headers) {
+          res.set('Access-Control-Allow-Headers', headers);
         }
+      } else if (options.allowHeaders) {
+        res.set('Access-Control-Allow-Headers',
+            options.allowHeaders.join(','));
       }
       if (options.maxAge) {
         res.set('Access-Control-Max-Age', options.maxAge);
