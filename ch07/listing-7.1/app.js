@@ -35,10 +35,7 @@ var corsOptions = {
   allowOrigin: createWhitelistValidator(originWhitelist),
   allowCredentials: true,
   allowMethods: ['GET', 'DELETE'],
-  allowHeaders: function(req) {
-    return req.headers['access-control-request-headers'];
-  },
-  maxAge: 60,
+  allowHeaders: ['Timezone-Offset'],
   exposeHeaders: ['X-Powered-By']
 };
 
