@@ -1,4 +1,6 @@
 var express = require('express');
+var cookieParser = require('cookie-parser');
+var serveStatic = require('serve-static');
 
 var POSTS = {
   '1': {'post': 'This is the first blog post.'},
@@ -83,8 +85,8 @@ var handleCors = function(options) {
 
 var SERVER_PORT = 9999;
 var serverapp = express();
-serverapp.use(express.cookieParser());
-serverapp.use(express.static(__dirname));
+serverapp.use(cookieParser());
+serverapp.use(serveStatic(__dirname));
 serverapp.use(handleCors(corsOptions));
 serverapp.get('/api/posts', function(req, res) {
   res.redirect(301, '/api/v2/posts');
@@ -105,6 +107,6 @@ console.log('Started server at http://localhost:' + SERVER_PORT);
 
 var CLIENT_PORT = 1111;
 var clientapp = express();
-clientapp.use(express.static(__dirname));
+clientapp.use(serveStatic(__dirname));
 clientapp.listen(CLIENT_PORT);
 console.log('Started client at http://localhost:' + CLIENT_PORT);
