@@ -16,10 +16,6 @@ var createXhr = function(method, url) {
 
 var getBlogPosts = function() {
   var xhr = createXhr('GET', 'http://localhost:9999/api/posts');
-  xhr.setRequestHeader('Timezone-Offset',
-                       new Date().getTimezoneOffset());
-  xhr.setRequestHeader('Sample-Source',
-                       'CORS in Action');
   xhr.onload = function() {
     var data = JSON.parse(xhr.responseText);
     var elem = document.getElementById('output');
