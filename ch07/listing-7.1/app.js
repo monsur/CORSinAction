@@ -86,9 +86,6 @@ serverapp.use(cookieParser());
 serverapp.use(serveStatic(__dirname));
 serverapp.use(handleCors(corsOptions));
 serverapp.get('/api/posts', function(req, res) {
-  res.redirect(301, '/api/v2/posts');
-});
-serverapp.get('/api/v2/posts', function(req, res) {
   res.json(POSTS);
 });
 serverapp.delete('/api/posts/:id', function(req, res) {
