@@ -27,6 +27,7 @@ var createWhitelistValidator = function(whitelist) {
 };
 
 var originWhitelist = [
+  'null'
 ];
 
 var corsOptions = {
