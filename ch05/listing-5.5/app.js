@@ -24,8 +24,6 @@ var handleCors = function(req, res, next) {
     res.set('Access-Control-Max-Age', '120');
     res.send(204);
     return;
-  } else {
-    res.set('Access-Control-Expose-Headers', 'X-Powered-By');
   }
   next();
 };
