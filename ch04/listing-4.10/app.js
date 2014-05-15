@@ -18,7 +18,7 @@ var handleCors = function(req, res, next) {
   if (isPreflight(req)) {
     res.set('Access-Control-Allow-Methods', 'DELETE');
     res.set('Access-Control-Allow-Headers',
-            'X-Timezone-Offset, X-Sample-Source');
+            'Timezone-Offset, Sample-Source');
     res.set('Access-Control-Max-Age', '120');
   }
   next();
