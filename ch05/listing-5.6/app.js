@@ -1,4 +1,5 @@
 var express = require('express');
+var cookieParser = require('cookie-parser');
 
 var POSTS = {
   '1': {'post': 'This is the first blog post.'},
@@ -21,13 +22,15 @@ var handleCors = function(req, res, next) {
     res.set('Access-Control-Allow-Headers',
             'Timezone-Offset, Sample-Source');
     res.set('Access-Control-Max-Age', '120');
+    res.send(204);
+    return;
   }
   next();
 };
 
 var SERVER_PORT = 9999;
 var serverapp = express();
-serverapp.use(express.cookieParser());
+serverapp.use(cookieParser());
 serverapp.use(express.static(__dirname));
 serverapp.use(handleCors);
 serverapp.get('/api/posts', function(req, res) {
