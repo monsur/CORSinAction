@@ -19,6 +19,8 @@ var handleCors = function(req, res, next) {
     res.set('Access-Control-Allow-Methods', 'DELETE');
     res.set('Access-Control-Allow-Headers',
             'Timezone-Offset, Sample-Source');
+    res.send(204);
+    return;
   }
   next();
 };

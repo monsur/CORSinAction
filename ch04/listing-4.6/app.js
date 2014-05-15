@@ -17,6 +17,8 @@ var handleCors = function(req, res, next) {
   res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
   if (isPreflight(req)) {
     res.set('Access-Control-Allow-Methods', 'DELETE');
+    res.send(204);
+    return;
   }
   next();
 };
