@@ -77,7 +77,6 @@ var handleCors = function(options) {
       if (options.maxAge) {
         res.set('Access-Control-Max-Age', options.maxAge);
       }
-      res.set('Access-Control-Max-Age', '120');
       res.send(204);
       return;
     } else if (options.exposeHeaders) {
