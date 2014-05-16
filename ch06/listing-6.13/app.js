@@ -1,4 +1,5 @@
 var express = require('express');
+var cookieParser = require('cookie-parser');
 
 var POSTS = {
   '1': {'post': 'This is the first blog post.'},
@@ -32,12 +33,25 @@ var originWhitelist = [
 var corsOptions = {
   allowOrigin: createWhitelistValidator(originWhitelist),
   allowCredentials: true,
+  shortCircuit: true,
+  maxAge: 60,
+  exposeHeaders: ['X-Powered-By'],
   allowMethods: ['GET', 'DELETE'],
   allowHeaders: function(req) {
-    return req.headers['access-control-request-headers'];
-  },
-  maxAge: 60,
-  exposeHeaders: ['X-Powered-By']
+    var reqHeaders = req.headers['access-control-request-headers'];
+    if (!reqHeaders) {
+      return null;
+    }
+    reqHeaders = reqHeaders.split(',');
+    resHeaders = [];
+    for (var i = 0; i < reqHeaders.length; i++) {
+      var header = reqHeaders[i].trim();
+      if (header.toLowerCase().indexOf('x-') === 0) {
+        resHeaders.push(header);
+      }
+    }
+    return resHeaders.join(',');
+  }
 };
 
 var handleCors = function(options) {
@@ -47,6 +61,9 @@ var handleCors = function(options) {
       var origin = req.headers['origin'];
       if (options.allowOrigin(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
+      } else if (options.shortCircuit) {
+        res.send(403);
+        return;
       }
       res.set('Vary', 'Origin');
     } else {
@@ -74,6 +91,9 @@ var handleCors = function(options) {
       if (options.maxAge) {
         res.set('Access-Control-Max-Age', options.maxAge);
       }
+      res.set('Access-Control-Max-Age', '120');
+      res.send(204);
+      return;
     } else if (options.exposeHeaders) {
       res.set('Access-Control-Expose-Headers', options.exposeHeaders.join(','));
     }
@@ -83,7 +103,7 @@ var handleCors = function(options) {
 
 var SERVER_PORT = 9999;
 var serverapp = express();
-serverapp.use(express.cookieParser());
+serverapp.use(cookieParser());
 serverapp.use(express.static(__dirname));
 serverapp.use(handleCors(corsOptions));
 serverapp.get('/api/posts', function(req, res) {
