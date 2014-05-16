@@ -34,23 +34,9 @@ var corsOptions = {
   allowOrigin: createWhitelistValidator(originWhitelist),
   allowCredentials: true,
   shortCircuit: true,
-  maxAge: 60,
   allowMethods: ['GET', 'DELETE'],
-  allowHeaders: function(req) {
-    var reqHeaders = req.headers['access-control-request-headers'];
-    if (!reqHeaders) {
-      return null;
-    }
-    reqHeaders = reqHeaders.split(',');
-    resHeaders = [];
-    for (var i = 0; i < reqHeaders.length; i++) {
-      var header = reqHeaders[i].trim();
-      if (header.toLowerCase().indexOf('x-') === 0) {
-        resHeaders.push(header);
-      }
-    }
-    return resHeaders.join(',');
-  }
+  allowHeaders: ['Timezone-Offset', 'Sample-Source'],
+  maxAge: 60
 };
 
 var handleCors = function(options) {
