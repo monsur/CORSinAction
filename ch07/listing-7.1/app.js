@@ -1,6 +1,5 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
-var serveStatic = require('serve-static');
 
 var POSTS = {
   '1': {'post': 'This is the first blog post.'},
@@ -34,8 +33,10 @@ var originWhitelist = [
 var corsOptions = {
   allowOrigin: createWhitelistValidator(originWhitelist),
   allowCredentials: true,
+  shortCircuit: true,
   allowMethods: ['GET', 'DELETE'],
   allowHeaders: ['Timezone-Offset'],
+  maxAge: 60,
   exposeHeaders: ['X-Powered-By']
 };
 
@@ -46,6 +47,9 @@ var handleCors = function(options) {
       var origin = req.headers['origin'];
       if (options.allowOrigin(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
+      } else if (options.shortCircuit) {
+        res.send(403);
+        return;
       }
       res.set('Vary', 'Origin');
     } else {
@@ -73,6 +77,8 @@ var handleCors = function(options) {
       if (options.maxAge) {
         res.set('Access-Control-Max-Age', options.maxAge);
       }
+      res.send(204);
+      return;
     } else if (options.exposeHeaders) {
       res.set('Access-Control-Expose-Headers', options.exposeHeaders.join(','));
     }
@@ -83,7 +89,7 @@ var handleCors = function(options) {
 var SERVER_PORT = 9999;
 var serverapp = express();
 serverapp.use(cookieParser());
-serverapp.use(serveStatic(__dirname));
+serverapp.use(express.static(__dirname));
 serverapp.use(handleCors(corsOptions));
 serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
@@ -101,6 +107,6 @@ console.log('Started server at http://localhost:' + SERVER_PORT);
 
 var CLIENT_PORT = 1111;
 var clientapp = express();
-clientapp.use(serveStatic(__dirname));
+clientapp.use(express.static(__dirname));
 clientapp.listen(CLIENT_PORT);
 console.log('Started client at http://localhost:' + CLIENT_PORT);
