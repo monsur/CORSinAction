@@ -43,7 +43,7 @@ var handleCors = function(options) {
       var origin = req.headers['origin'];
       if (options.allowOrigin(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
-      } else is (options.shortCircuit) {
+      } else if (options.shortCircuit) {
         res.send(403);
         return;
       }
