@@ -4,11 +4,12 @@ var myCanvas = document.getElementById("myCanvas");
 var myContext = myCanvas.getContext('2d');
 
 var img = new Image();
-img.crossorigin = 'anonymous';
+img.crossOrigin = 'anonymous';
 img.onload = function() {
     myCanvas.width = img.width;
     myCanvas.height = img.height;
     myContext.drawImage(img, 0, 0);
+    console.log(myCanvas.toDataURL("image/png")); //demonstrates that the canvas is not tainted
 };
 img.src = 'http://www.html5rocks.com/static/images/mastheads/h5r-shadow.png';
 </script>
