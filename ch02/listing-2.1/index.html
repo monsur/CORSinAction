@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body onload="loadPhotos();">
-<div id="photos"></div>
+<div id="photos">Loading photos...</div>
 <script>
 function loadPhotos() {
   var api_key = '<YOUR API KEY HERE>';
@@ -26,11 +26,13 @@ function loadPhotos() {
   xhr.onload = function() {
     var data = JSON.parse(xhr.responseText);
     if (data.stat == 'ok') {
+      var photosDiv = document.getElementById('photos');
+      photosDiv.innerHTML = '';
       var photos = data.photos.photo;
       for (var i = 0; i < photos.length; i++) {
         var img = document.createElement('img');
         img.src = photos[i].url_q;
-        document.getElementById('photos').appendChild(img);
+        photosDiv.appendChild(img);
       }
     } else {
       alert(data.message);
