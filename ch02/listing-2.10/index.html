@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<body onload="loadPhotos();">
-<div id="photos"></div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<body>
+<div id="photos">Loading photos...</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
 function loadPhotos() {
   var api_key = '<YOUR API KEY HERE>';
@@ -18,17 +18,21 @@ function loadPhotos() {
     dataType: 'json',
     success: function(response, textStatus, jqXHR) {
       if (response.stat == 'ok') {
-        for (var i = 0; i < response.photos.photo.length; i++) {
-          var img = document.createElement('img');
-          img.src = response.photos.photo[i].url_q;
-          document.getElementById('photos').appendChild(img);
-        }
+        $('#photos').empty();
+        $.each(response.photos.photo, function(i, photo) {
+          var img = $('<img>').attr('src', photo.url_q);
+          $('#photos').append(img);
+        });
+      } else {
+        alert(response.message);
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      alert('error');
+      alert('There was an error.');
     }});
 }
+
+$(document).ready(loadPhotos);
 </script>
 </body>
 </html>
