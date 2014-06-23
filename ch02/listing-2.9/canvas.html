@@ -9,7 +9,7 @@ img.onload = function() {
     myCanvas.width = img.width;
     myCanvas.height = img.height;
     myContext.drawImage(img, 0, 0);
-    console.log(myCanvas.toDataURL("image/png")); //demonstrates that the canvas is not tainted
+    console.log(myCanvas.toDataURL("image/png"));
 };
 img.src = 'http://www.html5rocks.com/static/images/mastheads/h5r-shadow.png';
 </script>
