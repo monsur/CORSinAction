@@ -36,11 +36,13 @@ serverapp.delete('/api/posts/:id', function(req, res) {
   delete POSTS[req.params.id];
   res.send(204);
 });
-serverapp.listen(SERVER_PORT);
-console.log('Started server at http://localhost:' + SERVER_PORT);
+serverapp.listen(SERVER_PORT, function() {
+  console.log('Started server at http://localhost:' + SERVER_PORT);
+});
 
 var CLIENT_PORT = 1111;
 var clientapp = express();
 clientapp.use(express.static(__dirname));
-clientapp.listen(CLIENT_PORT);
-console.log('Started client at http://localhost:' + CLIENT_PORT);
+clientapp.listen(CLIENT_PORT, function() {
+  console.log('Started client at http://localhost:' + CLIENT_PORT);
+});
