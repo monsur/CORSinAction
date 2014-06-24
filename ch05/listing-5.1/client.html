@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html><body>
+<html><body onload="getBlogPosts();">
 <style>
 .post {margin-bottom: 20px;}
 </style>
 <div id="output"></div>
 <script>
-
 var createXhr = function(method, url) {
   var xhr = new XMLHttpRequest();
   xhr.onerror = function() {
@@ -59,7 +58,5 @@ var deletePost = function(postId) {
   };
   xhr.send();
 };
-
-getBlogPosts();
 </script>
 </body></html>
