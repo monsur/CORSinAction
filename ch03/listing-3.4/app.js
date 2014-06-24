@@ -18,11 +18,13 @@ serverapp.use(handleCors);
 serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
 });
-serverapp.listen(SERVER_PORT);
-console.log('Started server at http://localhost:' + SERVER_PORT);
+serverapp.listen(SERVER_PORT, function() {
+  console.log('Started server at http://localhost:' + SERVER_PORT);
+});
 
 var CLIENT_PORT = 1111;
 var clientapp = express();
 clientapp.use(express.static(__dirname));
-clientapp.listen(CLIENT_PORT);
-console.log('Started client at http://localhost:' + CLIENT_PORT);
+clientapp.listen(CLIENT_PORT, function() {
+  console.log('Started client at http://localhost:' + CLIENT_PORT);
+});

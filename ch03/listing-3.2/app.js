@@ -12,5 +12,6 @@ serverapp.use(express.static(__dirname));
 serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
 });
-serverapp.listen(SERVER_PORT);
-console.log('Started server at http://localhost:' + SERVER_PORT);
+serverapp.listen(SERVER_PORT, function() {
+  console.log('Started server at http://localhost:' + SERVER_PORT);
+});
