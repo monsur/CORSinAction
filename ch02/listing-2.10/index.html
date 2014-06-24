@@ -16,15 +16,15 @@ function loadPhotos() {
   $.ajax(url, {
     type: method,
     dataType: 'json',
-    success: function(response, textStatus, jqXHR) {
-      if (response.stat == 'ok') {
+    success: function(data, textStatus, jqXHR) {
+      if (data.stat == 'ok') {
         $('#photos').empty();
-        $.each(response.photos.photo, function(i, photo) {
+        $.each(data.photos.photo, function(i, photo) {
           var img = $('<img>').attr('src', photo.url_q);
           $('#photos').append(img);
         });
       } else {
-        alert(response.message);
+        alert(data.message);
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
