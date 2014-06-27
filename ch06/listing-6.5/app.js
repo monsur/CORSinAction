@@ -53,7 +53,7 @@ var handleCors = function(options) {
     }
 
     if (isPreflight(req)) {
-      res.set('Access-Control-Allow-Methods', 'DELETE');
+      res.set('Access-Control-Allow-Methods', 'GET, DELETE');
       res.set('Access-Control-Allow-Headers',
               'Timezone-Offset, Sample-Source');
       res.set('Access-Control-Max-Age', '120');
@@ -79,7 +79,7 @@ serverapp.delete('/api/posts/:id', function(req, res) {
     delete POSTS[req.params.id];
     res.send(204);
   } else {
-    res.send(401);
+    res.send(403);
   }
 });
 serverapp.listen(SERVER_PORT, function() {

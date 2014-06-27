@@ -99,7 +99,7 @@ serverapp.delete('/api/posts/:id', function(req, res) {
     delete POSTS[req.params.id];
     res.send(204);
   } else {
-    res.send(401);
+    res.send(403);
   }
 });
 serverapp.listen(SERVER_PORT, function() {
