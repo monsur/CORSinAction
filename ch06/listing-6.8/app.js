@@ -5,9 +5,14 @@ var session = require('express-session');
 var csrf = require('csurf');
 
 var app = express();
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
-app.use(session({secret: 'CORSInAction'}));
+app.use(session({
+  secret: 'CORSInAction',
+  saveUninitialized: true,
+  resave: true}));
 app.use(csrf());
 app.get('/csrftest', function(req, res) {
   var form = '<html><body><form action="/csrftest" method="post">';
