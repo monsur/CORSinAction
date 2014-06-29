@@ -17,7 +17,7 @@ var isPreflight = function(req) {
 var createWhitelistValidator = function(whitelist) {
   return function(val) {
     for (var i = 0; i < whitelist.length; i++) {
-      if (val == whitelist[i]) {
+      if (val === whitelist[i]) {
         return true;
       }
     }
