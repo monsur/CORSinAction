@@ -15,11 +15,11 @@ app.use(session({
   resave: true}));
 app.use(csrf());
 app.get('/csrftest', function(req, res) {
-  var form = '<html><body><form action="/csrftest" method="post">';
-  form += '<input type="text" name="_csrf" ';
-  form += 'value="' + req.csrfToken() + '" />';
-  form += '<input type="submit" value="Submit" />';
-  form += '</form></body></html>';
+  var form = '<html><body><form action="/csrftest" method="post">\r\n';
+  form += '<input type="text" name="_csrf" \r\n';
+  form += '\tvalue="' + req.csrfToken() + '" />\r\n';
+  form += '<input type="submit" value="Submit" />\r\n';
+  form += '</form></body></html>\r\n';
   res.send(form);
 });
 app.post('/csrftest', function(req, res) {
