@@ -15,7 +15,7 @@ var createXhr = function(method, url) {
 };
 
 var getBlogPosts = function() {
-  var xhr = createXhr('GET', 'http://localhost:9999/api/posts');
+  var xhr = createXhr('GET', 'http://127.0.0.1:9999/api/posts');
   xhr.onload = function() {
     var data = JSON.parse(xhr.responseText);
     var elem = document.getElementById('output');
