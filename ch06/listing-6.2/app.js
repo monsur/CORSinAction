@@ -29,7 +29,7 @@ var corsOptions = {};
 
 var handleCors = function(options) {
   return function(req, res, next) {
-    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
     res.set('Access-Control-Allow-Credentials', 'true');
     if (isPreflight(req)) {
       res.set('Access-Control-Allow-Methods', 'GET, DELETE');
@@ -62,7 +62,7 @@ serverapp.delete('/api/posts/:id', function(req, res) {
   }
 });
 serverapp.listen(SERVER_PORT, function() {
-  console.log('Started server at http://localhost:' + SERVER_PORT);
+  console.log('Started server at http://127.0.0.1:' + SERVER_PORT);
 });
 
 var CLIENT_PORT = 1111;
