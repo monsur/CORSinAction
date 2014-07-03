@@ -47,7 +47,7 @@ serverapp.delete('/api/posts/:id', function(req, res) {
   }
 });
 serverapp.listen(SERVER_PORT, function() {
-  console.log('Started server at http://localhost:' + SERVER_PORT);
+  console.log('Started server at http://127.0.0.1:' + SERVER_PORT);
 });
 
 var CLIENT_PORT = 1111;
