@@ -94,6 +94,9 @@ serverapp.use(handleCors(corsOptions));
 serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
 });
+serverapp.post('/api/posts', function(req, res) {
+  res.json({foo: 'bar'});
+});
 serverapp.delete('/api/posts/:id', function(req, res) {
   if (req.cookies['username'] === 'owner') {
     delete POSTS[req.params.id];
