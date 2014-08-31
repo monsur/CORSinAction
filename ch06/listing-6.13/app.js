@@ -2,19 +2,19 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 
 var POSTS = {
-  '1': {'post': 'This is the first blog post.'},
-  '2': {'post': 'This is the second blog post.'},
-  '3': {'post': 'This is the third blog post.'}
+  1: { post: 'This is the first blog post.' },
+  2: { post: 'This is the second blog post.' },
+  3: { post: 'This is the third blog post.' }
 };
 
-var isPreflight = function(req) {
+function isPreflight(req) {
   var isHttpOptions = req.method === 'OPTIONS';
-  var hasOriginHeader = req.headers['origin'];
+  var hasOriginHeader = req.headers.origin;
   var hasRequestMethod = req.headers['access-control-request-method'];
   return isHttpOptions && hasOriginHeader && hasRequestMethod;
-};
+}
 
-var createWhitelistValidator = function(whitelist) {
+function createWhitelistValidator(whitelist) {
   return function(val) {
     for (var i = 0; i < whitelist.length; i++) {
       if (val === whitelist[i]) {
@@ -22,8 +22,8 @@ var createWhitelistValidator = function(whitelist) {
       }
     }
     return false;
-  }
-};
+  };
+}
 
 var originWhitelist = [
   'null',
@@ -44,11 +44,11 @@ var handleCors = function(options) {
   return function(req, res, next) {
 
     if (options.allowOrigin) {
-      var origin = req.headers['origin'];
+      var origin = req.headers.origin;
       if (options.allowOrigin(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
       } else if (options.shortCircuit) {
-        res.send(403);
+        res.status(403).end();
         return;
       }
       res.set('Vary', 'Origin');
@@ -65,7 +65,7 @@ var handleCors = function(options) {
         res.set('Access-Control-Allow-Methods',
             options.allowMethods.join(','));
       }
-      if (typeof(options.allowHeaders) === 'function') {
+      if (typeof options.allowHeaders === 'function') {
         var headers = options.allowHeaders(req);
         if (headers) {
           res.set('Access-Control-Allow-Headers', headers);
@@ -77,13 +77,13 @@ var handleCors = function(options) {
       if (options.maxAge) {
         res.set('Access-Control-Max-Age', options.maxAge);
       }
-      res.send(204);
+      res.status(204).end();
       return;
     } else if (options.exposeHeaders) {
       res.set('Access-Control-Expose-Headers', options.exposeHeaders.join(','));
     }
     next();
-  }
+  };
 };
 
 var SERVER_PORT = 9999;
@@ -95,11 +95,11 @@ serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
 });
 serverapp.delete('/api/posts/:id', function(req, res) {
-  if (req.cookies['username'] === 'owner') {
+  if (req.cookies.username === 'owner') {
     delete POSTS[req.params.id];
-    res.send(204);
+    res.status(204).end();
   } else {
-    res.send(403);
+    res.status(403).end();
   }
 });
 serverapp.listen(SERVER_PORT, function() {
