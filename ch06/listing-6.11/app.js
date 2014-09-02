@@ -60,7 +60,7 @@ var handleCors = function(options) {
       if (options.allowOrigin(origin)) {
         res.set('Access-Control-Allow-Origin', origin);
       } else if (options.shortCircuit) {
-        res.send(403);
+        res.status(403).end();
         return;
       }
       res.set('Vary', 'Origin');
@@ -87,7 +87,7 @@ var handleCors = function(options) {
             options.allowHeaders.join(','));
       }
       res.set('Access-Control-Max-Age', '120');
-      res.send(204);
+      res.status(204).end();
       return;
     } else {
       res.set('Access-Control-Expose-Headers', 'X-Powered-By');
@@ -107,9 +107,9 @@ serverapp.get('/api/posts', function(req, res) {
 serverapp.delete('/api/posts/:id', function(req, res) {
   if (req.cookies['username'] === 'owner') {
     delete POSTS[req.params.id];
-    res.send(204);
+    res.status(204).end();
   } else {
-    res.send(403);
+    res.status(403).end();
   }
 });
 serverapp.listen(SERVER_PORT, function() {

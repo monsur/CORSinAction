@@ -17,7 +17,7 @@ var handleCors = function(req, res, next) {
   res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
   if (isPreflight(req)) {
     console.log('Received a preflight request!');
-    res.send(204);
+    res.status(204).end();
     return;
   }
   next();
@@ -32,7 +32,7 @@ serverapp.get('/api/posts', function(req, res) {
 });
 serverapp.delete('/api/posts/:id', function(req, res) {
   delete POSTS[req.params.id];
-  res.send(204);
+  res.status(204).end();
 });
 serverapp.listen(SERVER_PORT, function() {
   console.log('Started server at http://127.0.0.1:' + SERVER_PORT);

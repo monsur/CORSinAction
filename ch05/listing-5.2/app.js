@@ -21,7 +21,7 @@ var handleCors = function(req, res, next) {
     res.set('Access-Control-Allow-Headers',
             'Timezone-Offset, Sample-Source');
     res.set('Access-Control-Max-Age', '120');
-    res.send(204);
+    res.status(204).end();
     return;
   }
   next();
@@ -38,9 +38,9 @@ serverapp.get('/api/posts', function(req, res) {
 serverapp.delete('/api/posts/:id', function(req, res) {
   if (req.cookies['username'] === 'owner') {
     delete POSTS[req.params.id];
-    res.send(204);
+    res.status(204).end();
   } else {
-    res.send(403);
+    res.status(403).end();
   }
 });
 serverapp.listen(SERVER_PORT, function() {
