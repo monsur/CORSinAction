@@ -26,6 +26,6 @@ app.post('/csrftest', function(req, res) {
   res.send('Successfully received CSRF token!');
 });
 app.use(function(err, req, res, next) {
-  res.send(403, 'ERROR parsing CSRF token!');
+  res.status(403).send('ERROR parsing CSRF token!');
 });
 app.listen(9999);
