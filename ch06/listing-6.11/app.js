@@ -35,21 +35,8 @@ var corsOptions = {
   allowCredentials: true,
   shortCircuit: true,
   allowMethods: ['GET', 'DELETE'],
-  allowHeaders: function(req) {
-    var reqHeaders = req.headers['access-control-request-headers'];
-    if (!reqHeaders) {
-      return null;
-    }
-    reqHeaders = reqHeaders.split(',');
-    resHeaders = [];
-    for (var i = 0; i < reqHeaders.length; i++) {
-      var header = reqHeaders[i].trim();
-      if (header.toLowerCase().indexOf('x-') === 0) {
-        resHeaders.push(header);
-      }
-    }
-    return resHeaders.join(',');
-  }
+  allowHeaders: ['Timezone-Offset', 'Sample-Source'],
+  maxAge: 120
 };
 
 var handleCors = function(options) {
@@ -86,7 +73,9 @@ var handleCors = function(options) {
         res.set('Access-Control-Allow-Headers',
             options.allowHeaders.join(','));
       }
-      res.set('Access-Control-Max-Age', '120');
+      if (options.maxAge) {
+        res.set('Access-Control-Max-Age', options.maxAge);
+      }
       res.status(204).end();
       return;
     } else {

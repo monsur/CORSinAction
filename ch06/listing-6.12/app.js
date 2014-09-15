@@ -36,7 +36,8 @@ var corsOptions = {
   shortCircuit: true,
   allowMethods: ['GET', 'DELETE'],
   allowHeaders: ['Timezone-Offset', 'Sample-Source'],
-  maxAge: 60
+  maxAge: 120,
+  exposeHeaders: ['X-Powered-By']
 };
 
 var handleCors = function(options) {
@@ -78,8 +79,8 @@ var handleCors = function(options) {
       }
       res.status(204).end();
       return;
-    } else {
-      res.set('Access-Control-Expose-Headers', 'X-Powered-By');
+    } else if (options.exposeHeaders) {
+      res.set('Access-Control-Expose-Headers', options.exposeHeaders.join(','));
     }
     next();
   }

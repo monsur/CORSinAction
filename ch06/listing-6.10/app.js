@@ -36,7 +36,19 @@ var corsOptions = {
   shortCircuit: true,
   allowMethods: ['GET', 'DELETE'],
   allowHeaders: function(req) {
-    return req.headers['access-control-request-headers'];
+    var reqHeaders = req.headers['access-control-request-headers'];
+    if (!reqHeaders) {
+      return null;
+    }
+    reqHeaders = reqHeaders.split(',');
+    resHeaders = [];
+    for (var i = 0; i < reqHeaders.length; i++) {
+      var header = reqHeaders[i].trim();
+      if (header.toLowerCase().indexOf('x-') === 0) {
+        resHeaders.push(header);
+      }
+    }
+    return resHeaders.join(',');
   }
 };
 

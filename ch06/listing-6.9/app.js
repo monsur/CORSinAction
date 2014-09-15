@@ -35,7 +35,9 @@ var corsOptions = {
   allowCredentials: true,
   shortCircuit: true,
   allowMethods: ['GET', 'DELETE'],
-  allowHeaders: ['Timezone-Offset', 'Sample-Source']
+  allowHeaders: function(req) {
+    return req.headers['access-control-request-headers'];
+  }
 };
 
 var handleCors = function(options) {
@@ -63,7 +65,12 @@ var handleCors = function(options) {
         res.set('Access-Control-Allow-Methods',
             options.allowMethods.join(','));
       }
-      if (options.allowHeaders) {
+      if (typeof(options.allowHeaders) === 'function') {
+        var headers = options.allowHeaders(req);
+        if (headers) {
+          res.set('Access-Control-Allow-Headers', headers);
+        }
+      } else if (options.allowHeaders) {
         res.set('Access-Control-Allow-Headers',
             options.allowHeaders.join(','));
       }
