@@ -16,7 +16,7 @@ var isPreflight = function(req) {
 var handleCors = function(req, res, next) {
   res.set('Access-Control-Allow-Origin', 'http://localhost:1111');
   if (isPreflight(req)) {
-    res.set('Access-Control-Allow-Methods', 'DELETE');
+    res.set('Access-Control-Allow-Methods', 'GET, DELETE');
     res.status(204).end();
     return;
   }
