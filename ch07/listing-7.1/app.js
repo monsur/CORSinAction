@@ -36,7 +36,7 @@ var corsOptions = {
   shortCircuit: true,
   allowMethods: ['GET', 'DELETE'],
   allowHeaders: ['Timezone-Offset'],
-  maxAge: 60,
+  maxAge: 120,
   exposeHeaders: ['X-Powered-By']
 };
 
