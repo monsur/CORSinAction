@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>CORS in Action: Errata</title>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
 <style>
 body {
   font-family: 'Open Sans', sans-serif;
@@ -46,16 +47,19 @@ body {
   <a href="http://www.manning.com/hossain/"><img id="cover" src="http://www.manning.com/hossain/hossain_cover150.jpg" alt="CORS in Action"></a>
   <p>
   Hi there! Thank you for taking the time to read
-  <a href="http://www.manning.com/hossain/">CORS in Action</a>. This errata
-  lists any errors in the book discovered after publication. If you find any
+  <a href="http://www.manning.com/hossain/"><i>CORS in Action</i></a>. This page
+  lists errors discovered after publication. If you find any
   errors, please report them on the
   <a href="https://forums.manning.com/forums/cors-in-action;jsessionid=F0DD6FE64132CF3EBC75E8CD05810CC3">Author Online Forum</a>.
-  I will continue to update this page as new issues are found. Thanks!</p>
+  I will continue to update this page as issues are found. Thanks!</p>
   <p class="signature">&mdash; Monsur Hossain</p>
+</div>
+<div id="lastupdated">
+  Last updated: 2014-01-19
 </div>
 
 <div class="erratum">
-  <ul><li>Chapter 2, Listing 2.1</li></ul>
+  <ul><li>Chapter 2, Listing 2.1:</li></ul>
   <p>The labels for "Sends request" and "Processes response" should be switched.
   <code>xhr.onload</code> should be labeled as "Processes response", while
   <code>xhr.send()</code> should be labeled as "Sends request."</p>
@@ -63,16 +67,16 @@ body {
 
 <div class="erratum">
   <ul>
-    <li>Chapter 4, Section 4.6, page 93</li>
-    <li>Chapter 6, Section 6.6.1, pages 140 &amp; 141</li>
+    <li>Chapter 4, Section 4.6, page 93 and 
+    Chapter 6, Section 6.6.1, pages 140 &amp; 141:</li>
   </ul>
   <p>These pages list the maximum preflight cache time as five minutes (for
-  Chrome, Opera and Safari). The actual value is 600 seconds, or 10 minutes.
+  Chrome, Opera, and Safari). The actual value is 600 seconds, or 10 minutes.
   This value can be found in the CrossOriginPreflightResultCache.cpp file for
   <a href="https://chromium.googlesource.com/chromium/blink/+/master/Source/core/loader/CrossOriginPreflightResultCache.cpp">Blink</a>
   and
   <a href="https://github.com/WebKit/webkit/blob/master/Source/WebCore/loader/CrossOriginPreflightResultCache.cpp">WebKit</a>.
-</div>
+</p></div>
 
 <div id="lastupdated">
   Last updated: 2014-01-19
