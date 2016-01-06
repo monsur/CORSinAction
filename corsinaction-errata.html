@@ -55,7 +55,7 @@ body {
   <p class="signature">&mdash; Monsur Hossain</p>
 </div>
 <div id="lastupdated">
-  Last updated: 2014-01-19
+  Last updated: 2016-01-05
 </div>
 
 <div class="erratum">
@@ -78,8 +78,17 @@ body {
   <a href="https://github.com/WebKit/webkit/blob/master/Source/WebCore/loader/CrossOriginPreflightResultCache.cpp">WebKit</a>.
 </p></div>
 
+<div class="erratum">
+  <ul>
+    <li>Chapter 5, Listing 5.2:</li>
+  </ul>
+  <p>There is a line of code that reads <code>serverapp.use(cookieParser);</code>.
+  This line should actually read <code>serverapp.use(cookieParser());</code>.
+  There are additional parenthesis after <code>cookieParser</code>.
+</p></div>
+
 <div id="lastupdated">
-  Last updated: 2014-01-19
+  Last updated: 2016-01-05
 </div>
 
 </div>
